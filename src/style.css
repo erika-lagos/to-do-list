@@ -6,6 +6,11 @@ body {
     min-height: 100vh;
 }
 
+button {
+    border: none;
+    background: none;
+}
+
 .sidebar, 
 .main {
     display: flex;
@@ -19,6 +24,13 @@ body {
 .sidebar-items, 
 .home-view {
     padding: 50px;
+}
+
+.sidebar-item, 
+.task {
+    display:flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .sidebar-footer,
@@ -37,3 +49,4 @@ body {
     flex-direction: column;
     gap: 15px;
 }
+

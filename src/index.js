@@ -46,7 +46,7 @@ const UserState = (function() {
 
 function loadContent() {
     sidebarView.render();
-    // homeView.render(UserState.getTasks());
+    homeView.render(UserState.getTasks());
 }
 
 window.addEventListener('load', loadContent);
