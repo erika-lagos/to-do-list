@@ -1,4 +1,7 @@
 import Tmp from './assets/images/tmp.svg';
+import Close from './assets/images/close.svg';
+import Save from './assets/images/save.svg';
+import Delete from './assets/images/delete.svg';
 import * as pubSub from './pubSub.js';
 
 const mainContainer = document.querySelector('.main');
@@ -9,7 +12,7 @@ function generateButton(name, icon) {
     const img = new Image();
     img.src = icon;
     img.alt = name;
-    img.className = 'icon';
+    img.className = 'small-icon';
     const button = document.createElement('button');
     button.className = name;
     button.appendChild(img);
@@ -17,11 +20,11 @@ function generateButton(name, icon) {
 }
 
 function renderHeader(containerNode) {
-    const delBtn = generateButton('delete-task', Tmp);
+    const delBtn = generateButton('delete-task', Delete);
     delBtn.addEventListener('click', evt => {
         pubSub.publish('Delete Task');
     })
-    const closeBtn = generateButton('close-dialog', Tmp);
+    const closeBtn = generateButton('close-dialog', Close);
     closeBtn.addEventListener('click', close);
     
     const header = document.createElement('div');
@@ -51,7 +54,7 @@ function renderInputs(containerNode) {
 function renderFooter(containerNode) {
     const footer = document.createElement('div');
     footer.className = 'dialog-footer';
-    const saveBtn = generateButton('save-task', Tmp);
+    const saveBtn = generateButton('save-task', Save);
     saveBtn.addEventListener('click', saveTask);
     footer.append(saveBtn);
     containerNode.append(footer);

@@ -11,6 +11,14 @@ button {
     background: none;
 }
 
+.icon {
+    height: 30px;
+}
+
+.small-icon {
+    height: 20px;
+}
+
 .sidebar, 
 .main {
     display: flex;
@@ -31,12 +39,27 @@ button {
     display:flex;
     gap: 5px;
     align-items: center;
+    padding: 5px 0;
+    height: 20px;
+}
+
+.task > .delete-task {
+    margin-left: auto;
+    display: none;
+}
+
+.task:hover > .delete-task, .button:hover {
+    display: inline-block;
+}
+
+.task:hover {
+    background-color: #ebebeb;
 }
 
 .sidebar-footer,
 .home-footer {
     margin-top: auto;
-    border-top: 1px solid rgb(177, 177, 177);
+    border-top: 1px solid #b1b1b1;
     padding: 18px;
     height: 25px;
     display: flex;
@@ -51,13 +74,13 @@ button {
 .home-view {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 }
 
 .task-view[open] {
     position: absolute;
     top: 30%;
-    border: 1px solid  rgb(235, 235, 235);
+    border: 1px solid  #ebebeb;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     padding: 0;

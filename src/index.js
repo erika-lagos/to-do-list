@@ -40,12 +40,14 @@ function createTask(event) {
 }
 
 function saveTask(data) {
-    //To-Do: implement functionality
     const task = new Task(data.name, data.desc);
-    //add task to userstate
     UserState.addTask(task);
-    //render new task
     homeView.addTask(task);
+}
+
+function deleteTask(task) {
+    UserState.removeTask(task.id);
+    homeView.removeTask(task.id);
 }
 
 function createHeader(event) {
@@ -57,6 +59,7 @@ function addEventListeners() {
     pubSub.subscribe('New Task', createTask);
     pubSub.subscribe('New Header', createHeader);
     pubSub.subscribe('Save Task', saveTask);
+    pubSub.subscribe('Delete Task', deleteTask);
 }
 
 function loadContent() {
