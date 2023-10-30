@@ -2,6 +2,7 @@ import Task from './task';
 import * as pubSub from './pubSub';
 import * as sidebarView from './sidebarView';
 import * as homeView from './homeView';
+import * as taskView from './taskView';
 import './style.css';
 
 const UserState = (function() {
@@ -10,7 +11,7 @@ const UserState = (function() {
         new Task('Hacer la cama', 'Asegurar que las sabanas estan limpias'),
         new Task('hacer de comer', 'Checar la lista del super'),
         new Task('estudiar javascript', 'Necesitamos un trabajo'),
-        new Task('ir al scooer', 'Llevarle jugo a sebastian')
+        new Task('ir al soccer', 'Llevarle jugo a sebastian')
     ];
 
     function getTasks() {
@@ -35,11 +36,16 @@ const UserState = (function() {
 })();
 
 function createTask(event) {
-    console.log('Button clicked', event);
-    //show modal
-    //capture data
+    taskView.show();
+}
+
+function saveTask(data) {
+    //To-Do: implement functionality
+    const task = new Task(data.name, data.desc);
     //add task to userstate
+    UserState.addTask(task);
     //render new task
+    homeView.addTask(task);
 }
 
 function createHeader(event) {
@@ -50,6 +56,7 @@ function createHeader(event) {
 function addEventListeners() {
     pubSub.subscribe('New Task', createTask);
     pubSub.subscribe('New Header', createHeader);
+    pubSub.subscribe('Save Task', saveTask);
 }
 
 function loadContent() {
@@ -59,5 +66,3 @@ function loadContent() {
 }
 
 window.addEventListener('load', loadContent);
-
-export default pubSub;

@@ -1,0 +1,88 @@
+import Tmp from './assets/images/tmp.svg';
+import * as pubSub from './pubSub.js';
+
+const mainContainer = document.querySelector('.main');
+let nameInput, descInput;
+const dialog = generateDialog();
+    
+function generateButton(name, icon) {
+    const img = new Image();
+    img.src = icon;
+    img.alt = name;
+    img.className = 'icon';
+    const button = document.createElement('button');
+    button.className = name;
+    button.appendChild(img);
+    return button;
+}
+
+function renderHeader(containerNode) {
+    const delBtn = generateButton('delete-task', Tmp);
+    delBtn.addEventListener('click', evt => {
+        pubSub.publish('Delete Task');
+    })
+    const closeBtn = generateButton('close-dialog', Tmp);
+    closeBtn.addEventListener('click', close);
+    
+    const header = document.createElement('div');
+    header.className = 'dialog-header';
+    header.append(delBtn, closeBtn);
+
+    containerNode.append(header);
+}
+
+function renderInputs(containerNode) {
+    nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.id = 'task-name-input';
+    nameInput.name = 'task-name';
+    nameInput.placeholder = 'Name your task';
+    containerNode.append(nameInput);
+
+    descInput = document.createElement('textarea');
+    descInput.name = 'task-desc';
+    descInput.id = 'task-desc-input';
+    descInput.cols = 40;
+    descInput.rows = 5;
+    descInput.placeholder = 'Describe your task';
+    containerNode.append(descInput);
+}
+
+function renderFooter(containerNode) {
+    const footer = document.createElement('div');
+    footer.className = 'dialog-footer';
+    const saveBtn = generateButton('save-task', Tmp);
+    saveBtn.addEventListener('click', saveTask);
+    footer.append(saveBtn);
+    containerNode.append(footer);
+}
+
+function saveTask(evt) {
+    const name = nameInput.value;
+    const desc = descInput.value;
+    pubSub.publish('Save Task', {name, desc});
+    close();
+}
+
+function generateDialog() {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'task-view';
+    renderHeader(dialog);
+    renderInputs(dialog);
+    renderFooter(dialog);
+    mainContainer.append(dialog);
+    return dialog;
+}
+
+function close() {
+    dialog.close();
+}
+
+function show(task) {
+    
+    //populate modal with the task data
+    //show it
+    dialog.show();
+}
+
+export { show };

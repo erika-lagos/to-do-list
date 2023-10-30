@@ -25,6 +25,7 @@ class footerButton {
 }
 
 const mainContainer = document.querySelector('.main');
+let homeContainer;
 
 const footerButtons = [
     new footerButton('New Task', Tmp),
@@ -53,7 +54,7 @@ function renderTaskNode(task) {
 function renderTasks(tasks) {
     if (tasks === null || tasks === undefined) 
         return;
-    const homeContainer = document.createElement('div');
+    homeContainer = document.createElement('div');
     homeContainer.className = 'home-view';
     tasks.forEach(task => {
         const taskNode = renderTaskNode(task);
@@ -79,4 +80,9 @@ function render(tasks) {
     renderFooter(footerButtons);    
 }
 
-export { render };
+function addTask(task) {
+    const taskNode = renderTaskNode(task);
+    homeContainer.append(taskNode);
+}
+
+export { render, addTask };
