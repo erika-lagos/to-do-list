@@ -5,7 +5,7 @@ import Delete from './assets/images/delete.svg';
 import * as pubSub from './pubSub.js';
 
 const mainContainer = document.querySelector('.main');
-let nameInput, descInput;
+let nameInput, descInput, taskId;
 const dialog = generateDialog();
     
 function generateButton(name, icon) {
@@ -62,8 +62,8 @@ function renderFooter(containerNode) {
 
 function saveTask(evt) {
     const name = nameInput.value;
-    const desc = descInput.value;
-    pubSub.publish('Save Task', {name, desc});
+    const description = descInput.value;
+    pubSub.publish('Save Task', {name, description, id: taskId});
     close();
 }
 
@@ -78,13 +78,18 @@ function generateDialog() {
 }
 
 function close() {
+    nameInput.value = '';
+    nameInput.desc = '';
+    taskId = null;
     dialog.close();
 }
 
 function show(task) {
-    
-    //populate modal with the task data
-    //show it
+    if (task !== null) {
+        nameInput.value = task.name;
+        descInput.value = task.description;
+        taskId = task.id;
+    } 
     dialog.show();
 }
 

@@ -27,10 +27,18 @@ const UserState = (function() {
         tasks.splice(taskIndex,1);
     }
 
+    function replaceTask(taskData) {
+        const oldTask = tasks.find(task => task.id === taskData.id);
+        oldTask.name = taskData.name;
+        oldTask.description = taskData.description;
+        return oldTask;
+    }
+
     return {
         getTasks,
         addTask,
         removeTask,
+        replaceTask
     };
 
 })();
@@ -40,14 +48,24 @@ function createTask(event) {
 }
 
 function saveTask(data) {
-    const task = new Task(data.name, data.desc);
-    UserState.addTask(task);
-    homeView.addTask(task);
+    if (data.taskId !== null) {  
+        const modifiedTask = UserState.replaceTask(data);
+        homeView.replaceTask(modifiedTask);
+    } else {
+        const task = new Task(data.name, data.desc);
+        UserState.addTask(task);
+        homeView.addTask(task);
+        //if it doesn't, add new task
+    }
 }
 
 function deleteTask(task) {
     UserState.removeTask(task.id);
     homeView.removeTask(task.id);
+}
+
+function editTask(task) {
+    taskView.show(task);
 }
 
 function createHeader(event) {
@@ -60,6 +78,7 @@ function addEventListeners() {
     pubSub.subscribe('New Header', createHeader);
     pubSub.subscribe('Save Task', saveTask);
     pubSub.subscribe('Delete Task', deleteTask);
+    pubSub.subscribe('Edit Task', editTask);
 }
 
 function loadContent() {

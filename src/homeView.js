@@ -1,5 +1,6 @@
 import Tmp from './assets/images/tmp.svg';
 import NewTask from './assets/images/new-task.svg';
+import Edit from './assets/images/edit.svg';
 import Delete from './assets/images/delete.svg';
 import * as pubSub from './pubSub.js';
 
@@ -34,6 +35,18 @@ const footerButtons = [
     new footerButton('New Header', Tmp)
 ];
 
+function renderButton(icon, action, task) {
+    const button = document.createElement('button');
+    const img = new Image();
+    img.src = icon;
+    img.className = 'small-icon';
+    button.append(img);
+    button.addEventListener('click', evt => {
+        pubSub.publish(action, task);
+    });
+    return button;
+}
+
 function renderTaskNode(task) {
     const taskNode = document.createElement('div');
     taskNode.className = 'task';
@@ -51,16 +64,12 @@ function renderTaskNode(task) {
     label.textContent = task.name;
     taskNode.append(label);
 
-    const delButton = document.createElement('button');
-    delButton.className = 'delete-task';
-    const img = new Image();
-    img.src = Delete;
-    img.className = 'small-icon';
-    delButton.append(img);
-    delButton.addEventListener('click', evt => {
-        pubSub.publish('Delete Task', task);
-    });
-    taskNode.append(delButton);
+    const editButton = renderButton(Edit, 'Edit Task', task);
+    const delButton = renderButton(Delete, 'Delete Task', task);
+    const taskButtons = document.createElement('div');
+    taskButtons.className = 'task-buttons';
+    taskButtons.append(editButton, delButton);
+    taskNode.append(taskButtons);
 
     return taskNode;
 }
@@ -104,7 +113,14 @@ function removeTask(taskId) {
     homeContainer.removeChild(taskNode);
 }
 
+function replaceTask(task) {
+    const oldTaskNode = document.querySelector(`[id=task-${task.id}]`);
+    const newTaskNode = renderTaskNode(task);
+    homeContainer.replaceChild(newTaskNode, oldTaskNode);
+}
+
 export { 
     render, 
     addTask,
-    removeTask };
+    removeTask,
+    replaceTask };

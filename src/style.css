@@ -43,12 +43,12 @@ button {
     height: 20px;
 }
 
-.task > .delete-task {
+.task > .task-buttons {
     margin-left: auto;
     display: none;
 }
 
-.task:hover > .delete-task, .button:hover {
+.task:hover > .task-buttons {
     display: inline-block;
 }
 
