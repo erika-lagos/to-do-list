@@ -1,18 +1,8 @@
+import Task from './task';
+import * as pubSub from './pubSub';
 import * as sidebarView from './sidebarView';
 import * as homeView from './homeView';
 import './style.css';
-
-class Task {
-
-    static lastTaskId = 0;
-
-    constructor(name, description) {
-        this.name = name;
-        this.description = description;
-        this.id = Task.lastTaskId++;
-        this.isComplete = false;
-    }
-}
 
 const UserState = (function() {
 
@@ -44,9 +34,30 @@ const UserState = (function() {
 
 })();
 
+function createTask(event) {
+    console.log('Button clicked', event);
+    //show modal
+    //capture data
+    //add task to userstate
+    //render new task
+}
+
+function createHeader(event) {
+    //TODO: implement this functionality
+    console.log('Create header functionality pending')
+}
+
+function addEventListeners() {
+    pubSub.subscribe('New Task', createTask);
+    pubSub.subscribe('New Header', createHeader);
+}
+
 function loadContent() {
     sidebarView.render();
     homeView.render(UserState.getTasks());
+    addEventListeners();
 }
 
 window.addEventListener('load', loadContent);
+
+export default pubSub;

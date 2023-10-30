@@ -1,4 +1,35 @@
 import Tmp from './assets/images/tmp.svg';
+import * as pubSub from './pubSub.js';
+
+class footerButton {
+    constructor(name, icon) {
+        this.name = name;
+        this.icon = icon;
+    }
+    
+    renderButton() {
+        const img = new Image();
+        img.src = this.icon;
+        img.alt = this.name;
+        img.className = 'icon';
+        const button = document.createElement('button');
+        button.className = 'sidebar-item';
+        button.appendChild(img);
+        button.addEventListener('click', this.handleClick.bind(this));
+        return button;
+    }
+
+    handleClick(event) {
+        pubSub.publish(this.name, event);
+    }
+}
+
+const mainContainer = document.querySelector('.main');
+
+const footerButtons = [
+    new footerButton('New Task', Tmp),
+    new footerButton('New Header', Tmp)
+];
 
 function renderTaskNode(task) {
     const taskNode = document.createElement('div');
@@ -19,11 +50,8 @@ function renderTaskNode(task) {
     return taskNode;
 }
 
-
-const mainContainer = document.querySelector('.main');
-
-function render(tasks) {
-    if (tasks === null || tasks === undefined)
+function renderTasks(tasks) {
+    if (tasks === null || tasks === undefined) 
         return;
     const homeContainer = document.createElement('div');
     homeContainer.className = 'home-view';
@@ -32,6 +60,23 @@ function render(tasks) {
         homeContainer.append(taskNode);
     });
     mainContainer.append(homeContainer)
+}
+
+function renderFooter(items) {
+    if (items === null || items === undefined)
+        return;
+    const itemsContainer = document.createElement('div');
+    itemsContainer.className = 'home-footer';
+    items.forEach(item => {
+        const button = item.renderButton();
+        itemsContainer.append(button);
+    });
+    mainContainer.appendChild(itemsContainer);
+}
+
+function render(tasks) {
+    renderTasks(tasks);
+    renderFooter(footerButtons);    
 }
 
 export { render };
