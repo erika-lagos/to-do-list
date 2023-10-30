@@ -1,6 +1,6 @@
-import Tmp from './assets/images/tmp.svg';
 import AllTasks from './assets/images/all-tasks.svg';
-import NewTask from './assets/images/new-task.svg';
+import NewWorkspace from './assets/images/new-workspace.svg';
+import NewProject from './assets/images/new-project.svg';
 
 class sidebarItem {
     constructor(name, icon, fullTextButtons) {
@@ -29,9 +29,8 @@ const defaultItems = [
     new sidebarItem('All Tasks', AllTasks, true)
 ];
 const footerItems = [
-    new sidebarItem('New Workspace', Tmp, false),
-    new sidebarItem('New Project', Tmp, false),
-    new sidebarItem('New Task', NewTask, false)
+    new sidebarItem('New Workspace', NewWorkspace, false),
+    new sidebarItem('New Project', NewProject, false)
 ];
 
 function renderItems(items, containerName) {

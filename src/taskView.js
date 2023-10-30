@@ -85,7 +85,7 @@ function close() {
 }
 
 function show(task) {
-    if (task !== null) {
+    if (task !== undefined) {
         nameInput.value = task.name;
         descInput.value = task.description;
         taskId = task.id;

@@ -55,7 +55,6 @@ function saveTask(data) {
         const task = new Task(data.name, data.desc);
         UserState.addTask(task);
         homeView.addTask(task);
-        //if it doesn't, add new task
     }
 }
 

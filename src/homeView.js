@@ -1,4 +1,4 @@
-import Tmp from './assets/images/tmp.svg';
+import NewHeader from './assets/images/new-header.svg';
 import NewTask from './assets/images/new-task.svg';
 import Edit from './assets/images/edit.svg';
 import Delete from './assets/images/delete.svg';
@@ -32,7 +32,7 @@ let homeContainer;
 
 const footerButtons = [
     new footerButton('New Task', NewTask),
-    new footerButton('New Header', Tmp)
+    new footerButton('New Header', NewHeader)
 ];
 
 function renderButton(icon, action, task) {
