@@ -58,9 +58,9 @@ function saveTask(data) {
     }
 }
 
-function deleteTask(task) {
-    UserState.removeTask(task.id);
-    homeView.removeTask(task.id);
+function deleteTask(taskId) {
+    UserState.removeTask(taskId);
+    homeView.removeTask(taskId);
 }
 
 function editTask(task) {

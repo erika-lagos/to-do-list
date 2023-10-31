@@ -22,7 +22,8 @@ function generateButton(name, icon) {
 function renderHeader(containerNode) {
     const delBtn = generateButton('delete-task', Delete);
     delBtn.addEventListener('click', evt => {
-        pubSub.publish('Delete Task');
+        pubSub.publish('Delete Task', taskId);
+        close();
     })
     const closeBtn = generateButton('close-dialog', Close);
     closeBtn.addEventListener('click', close);

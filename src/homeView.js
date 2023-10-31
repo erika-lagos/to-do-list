@@ -35,14 +35,14 @@ const footerButtons = [
     new footerButton('New Header', NewHeader)
 ];
 
-function renderButton(icon, action, task) {
+function renderButton(icon, action, data) {
     const button = document.createElement('button');
     const img = new Image();
     img.src = icon;
     img.className = 'small-icon';
     button.append(img);
     button.addEventListener('click', evt => {
-        pubSub.publish(action, task);
+        pubSub.publish(action, data);
     });
     return button;
 }
@@ -65,7 +65,7 @@ function renderTaskNode(task) {
     taskNode.append(label);
 
     const editButton = renderButton(Edit, 'Edit Task', task);
-    const delButton = renderButton(Delete, 'Delete Task', task);
+    const delButton = renderButton(Delete, 'Delete Task', task.id);
     const taskButtons = document.createElement('div');
     taskButtons.className = 'task-buttons';
     taskButtons.append(editButton, delButton);
