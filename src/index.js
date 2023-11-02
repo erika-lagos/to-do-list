@@ -30,6 +30,13 @@ function editTask(task) {
     taskView.show(task);
 }
 
+function showProject(projectId) {
+    const activeProject = userState.getProject(projectId);
+    userState.setActiveProject(activeProject);
+    homeView.renderProject(activeProject);
+    console.log('Now showing project', projectId);
+}
+
 function createHeader(event) {
     //TODO: implement this functionality
     console.log('Create header functionality pending')
@@ -41,11 +48,12 @@ function addEventListeners() {
     pubSub.subscribe('Save Task', saveTask);
     pubSub.subscribe('Delete Task', deleteTask);
     pubSub.subscribe('Edit Task', editTask);
+    pubSub.subscribe('Show Project', showProject);
 }
 
 function loadContent() {
-    sidebarView.render();
-    homeView.render(userState.loadTasks());
+    sidebarView.render(userState.getProjects());
+    homeView.render();
     addEventListeners();
 }
 

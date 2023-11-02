@@ -31,7 +31,7 @@ button {
 
 .sidebar-items, 
 .home-view {
-    padding: 50px;
+    padding: 40px 60px;
 }
 
 .sidebar-item, 
@@ -43,6 +43,19 @@ button {
     height: 20px;
 }
 
+.sidebar-item {
+    margin-top: 15px;
+}
+
+.project-name {
+    font-size: 20pt;
+    margin-bottom: 5px;
+}
+
+.project-description {
+    color: #525252;
+    margin-bottom: 30px;
+}
 
 .task > .task-buttons {
     margin-left: auto;

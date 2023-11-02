@@ -1,12 +1,15 @@
 export default class Task {
 
-    static lastTaskId = 0;
+    static lastId = 0;
 
-    constructor(name, description, id = Task.lastTaskId++, isComplete = false) {
+    constructor(name, description, id = Task.lastId++, isComplete = false) {
         this.name = name;
         this.description = description;
         this.id = id;
         this.isComplete = isComplete;
+        if (this.id > Task.lastId + 1) {
+            Task.lastId = this.id + 1;
+        }
     }
 
     // setId(id) {
