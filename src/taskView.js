@@ -4,8 +4,8 @@ import Save from './assets/images/save.svg';
 import Delete from './assets/images/delete.svg';
 import * as pubSub from './pubSub.js';
 
-const mainContainer = document.querySelector('.main');
 let nameInput, descInput, taskId;
+const mainContainer = document.querySelector('.main');
 const dialog = generateDialog();
     
 function generateButton(name, icon) {
@@ -46,8 +46,8 @@ function renderInputs(containerNode) {
     descInput = document.createElement('textarea');
     descInput.name = 'task-desc';
     descInput.id = 'task-desc-input';
-    descInput.cols = 40;
-    descInput.rows = 5;
+    descInput.cols = 50;
+    descInput.rows = 4;
     descInput.placeholder = 'Describe your task';
     containerNode.append(descInput);
 }

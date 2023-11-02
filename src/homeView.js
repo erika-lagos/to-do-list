@@ -75,14 +75,14 @@ function renderTaskNode(task) {
 }
 
 function renderTasks(tasks) {
-    if (tasks === null || tasks === undefined) 
-        return;
     homeContainer = document.createElement('div');
     homeContainer.className = 'home-view';
-    tasks.forEach(task => {
+    if (tasks !== null && tasks !== undefined) {
+        tasks.forEach(task => {
         const taskNode = renderTaskNode(task);
         homeContainer.append(taskNode);
-    });
+        });
+    }
     mainContainer.append(homeContainer)
 }
 
