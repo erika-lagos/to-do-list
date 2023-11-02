@@ -1,4 +1,3 @@
-import Tmp from './assets/images/tmp.svg';
 import Close from './assets/images/close.svg';
 import Save from './assets/images/save.svg';
 import Delete from './assets/images/delete.svg';
@@ -80,8 +79,8 @@ function generateDialog() {
 
 function close() {
     nameInput.value = '';
-    nameInput.desc = '';
-    taskId = null;
+    descInput.value = '';
+    taskId = undefined;
     dialog.close();
 }
 

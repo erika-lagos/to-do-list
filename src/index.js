@@ -11,7 +11,7 @@ function createTask(event) {
 }
 
 function saveTask(data) {
-    if (data.id !== undefined) {  
+    if (data.id !== undefined && data.id !== null) {  
         const modifiedTask = userState.replaceTask(data);
         homeView.replaceTask(modifiedTask);
     } else {
