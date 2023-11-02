@@ -1,12 +1,31 @@
 import Task from './task';
+import Project from './project';
+import EditView from './editView';
 import * as userState from './userState';
 import * as pubSub from './pubSub';
 import * as sidebarView from './sidebarView';
 import * as homeView from './homeView';
-import * as taskView from './taskView';
 import './style.css';
 
-function createTask(event) {
+const projectView = new EditView('Delete Project', 'Save Project', 'Name your project', 'Describe your project');
+const taskView = new EditView('Delete Task', 'Save Task', 'Name your task', 'Describe your task');
+
+function createProject() {
+    projectView.show();
+}
+
+function saveProject(data) {
+    if (data.id !== undefined && data.id !== null) {  
+        const modifiedProject = userState.replaceProject(data);
+        sidebarView.replaceProject(modifiedProject);
+    } else {
+        const project = new Project(data.name, data.description);
+        userState.addProject(project);
+        sidebarView.addProject(project);
+    }
+}
+
+function createTask() {
     taskView.show();
 }
 
@@ -15,7 +34,7 @@ function saveTask(data) {
         const modifiedTask = userState.replaceTask(data);
         homeView.replaceTask(modifiedTask);
     } else {
-        const task = new Task(data.name, data.desc);
+        const task = new Task(data.name, data.description);
         userState.addTask(task);
         homeView.addTask(task);
     }
@@ -34,7 +53,6 @@ function showProject(projectId) {
     const activeProject = userState.getProject(projectId);
     userState.setActiveProject(activeProject);
     homeView.renderProject(activeProject);
-    console.log('Now showing project', projectId);
 }
 
 function createHeader(event) {
@@ -49,6 +67,8 @@ function addEventListeners() {
     pubSub.subscribe('Delete Task', deleteTask);
     pubSub.subscribe('Edit Task', editTask);
     pubSub.subscribe('Show Project', showProject);
+    pubSub.subscribe('New Project', createProject);
+    pubSub.subscribe('Save Project', saveProject)
 }
 
 function loadContent() {

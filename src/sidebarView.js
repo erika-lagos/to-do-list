@@ -5,6 +5,7 @@ import ProjectIcon from './assets/images/project-icon.svg';
 import * as pubSub from './pubSub.js';
 
 const sidebarContainer = document.querySelector('.sidebar');
+let projectsContainer;
 const defaultButtons = [
     createButton('All Tasks', AllTasks, true, 'All Tasks')
 ];
@@ -34,29 +35,42 @@ function handleClick(action, actionData, evt) {
 
 function createUserButtons(userItems) {
     const userButtons = [];
-    if (!userItems) {
-        return userButtons;
-    }
-    userItems.forEach(item => {
-        userButtons.push(createButton(item.name, ProjectIcon, true, 'Show Project', item.id));
+    userItems?.forEach(item => {
+        const button = createButton(item.name, ProjectIcon, true, 'Show Project', item.id);
+        button.id = `project-${item.id}`;
+        userButtons.push(button);
     });
     return userButtons;
 }
 
-function renderButtons(items, containerClass) {
-    if (items === null || items === undefined)
-        return;
+function renderButtonGroup(buttons, containerClass) {
     const itemsContainer = document.createElement('div');
     itemsContainer.className = containerClass;
-    itemsContainer.append(...items);
+    itemsContainer.append(...buttons);
     sidebarContainer.appendChild(itemsContainer);
+    return itemsContainer;
+}
+
+function addProject(project) {
+    const [ projectNode ] = createUserButtons([ project ]);
+    projectsContainer.append(projectNode);
+}
+
+function replaceProject(project) {
+    const oldProjectNode = document.querySelector(`[id=project-${project.id}]`);
+    const [ newProjectNode ] = createUserButtons(...project);
+    oldProjectNode.parentNode.replaceChild(newProjectNode, oldProjectNode);
 }
 
 function render(userItems) {
-    renderButtons(defaultButtons, 'sidebar-items');
+    renderButtonGroup(defaultButtons, 'sidebar-items');
     const userButtons = createUserButtons(userItems);
-    renderButtons(userButtons, 'sidebar-items');
-    renderButtons(footerButtons, 'sidebar-footer');
+    projectsContainer = renderButtonGroup(userButtons, 'sidebar-items');
+    renderButtonGroup(footerButtons, 'sidebar-footer');
 }
 
-export  { render };
+export  { 
+    render, 
+    addProject,
+    replaceProject 
+};

@@ -8,7 +8,7 @@ export default class Project {
         this.id = id;
         this.progress = progress;
         this.tasks = tasks;
-        if (this.id > Project.lastId + 1) {
+        if (this.id >= Project.lastId) {
             Project.lastId = this.id + 1;
         }
     }
