@@ -62,6 +62,12 @@ function createTaskNode(task) {
     check.type = 'checkbox';
     check.className = 'task-check';
     check.id = task.id;
+    check.checked = task.isComplete;
+    check.addEventListener('change', evt => {
+        //This is dirty here :(
+        task.isComplete = check.checked;
+        pubSub.publish('Save Task', task);
+    });
     taskNode.append(check);
     
     const label = document.createElement('label');
