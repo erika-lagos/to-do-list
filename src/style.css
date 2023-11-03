@@ -58,10 +58,8 @@ button {
     font-size: 20pt;
     margin-bottom: 5px;
     display: flex;
-}
-
-.inline-buttons {
-    margin-left: auto;
+    align-items: center;
+    gap: 20px;
 }
 
 .project-description {
@@ -72,10 +70,15 @@ button {
     margin-bottom: 40px;
 }
 
+.inline-buttons {
+    margin-left: auto;
+}
+
 .date-label {
     font-size: 9pt;
     background-color: #ebebeb;
     border: solid 1px #b1b1b1;
+    color: #6b6b6b;
     border-radius: 6px;
     padding: 1px 8px;
 }
@@ -83,11 +86,18 @@ button {
 .due-today {
     background-color: #fef5b2;
     border: solid 1px #baa401;
+    color: #8b7510;
 }
 
 .overdue {
     background-color: #fcc8c7;
     border: solid 1px #f28987;
+    color: #9e5655;
+}
+
+.large-date {
+    font-size: 12pt;
+    font-weight: bold;
 }
 
 .task > .inline-buttons {

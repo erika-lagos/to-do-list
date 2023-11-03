@@ -26,7 +26,7 @@ function saveProject(data) {
         sidebarView.replaceProject(modifiedProject);
         homeView.replaceProject(modifiedProject);
     } else {
-        const project = new Project(data.name, data.description);
+        const project = new Project(data.name, data.description, data.dueDate);
         userState.addProject(project);
         sidebarView.addProject(project);
     }

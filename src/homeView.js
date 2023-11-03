@@ -72,7 +72,7 @@ function createTaskNode(task) {
     taskNode.append(check);
     
     if (task.dueDate) {
-        const dateLabel = createDateLabel(task.dueDate);
+        const dateLabel = createDateLabel(task);
         taskNode.append(dateLabel);
     }
     
@@ -92,21 +92,11 @@ function createTaskNode(task) {
     return taskNode;
 }
 
-function createDateLabel(dueDate) {
+function createDateLabel(userObject) {
     const dateLabel = document.createElement('label');
     dateLabel.className = 'date-label';
-    
-    const today = new Date();
-    const difference = differenceInCalendarDays(dueDate, today);
-    if (difference === 0) {
-        dateLabel.classList.add('due-today');
-        dateLabel.textContent = 'today';
-    } else if (difference < 0) {
-        dateLabel.classList.add('overdue');
-        dateLabel.textContent = formatDistanceToNowStrict(dueDate, {unit: 'day', addSuffix: true});
-    } else {
-        dateLabel.textContent = formatDistanceToNowStrict(dueDate, {unit: 'day', roundingMethod: 'ceil'});
-    }
+    dateLabel.textContent = userObject.getDateStringToDisplay();
+    dateLabel.classList.add(userObject.getStatusFlag());
     return dateLabel;
 }
 
@@ -135,6 +125,12 @@ function createProjectNode(project) {
     const nameNode = document.createElement('div');
     nameNode.className = 'project-header';
     nameNode.textContent = project.name;
+
+    if (project.dueDate) {
+        const dateLabel = createDateLabel(project);
+        dateLabel.classList.add('large-date');
+        nameNode.append(dateLabel);
+    }
     
     const editButton = createButton(Edit, 'Edit Project', project);
     const delButton = createButton(Delete, 'Delete Project', project.id);

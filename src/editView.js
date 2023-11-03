@@ -119,7 +119,7 @@ export default class EditView {
         if (userObject !== undefined) {
             this.nameInput.value = userObject.name ? userObject.name : '';
             this.descInput.value = userObject.description ? userObject.description : '';
-            this.dateInput.value = userObject.getDateString();
+            this.dateInput.value = userObject.getDateStringForPicker();
             this.activeId = userObject.id;
         } 
         this.dialog.show();

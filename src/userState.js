@@ -29,7 +29,12 @@ function storeData() {
 }
 
 function parseProject(projectString) {
-    const project = new Project(projectString.name, projectString.description, projectString.id, projectString.progress);
+    const project = new Project(
+        projectString.name, 
+        projectString.description, 
+        projectString.dueDate ? new Date(projectString.dueDate) : undefined, 
+        projectString.id, 
+        projectString.progress);
     project.addTasks(parseTasks(projectString.tasks));
     return project;
 }
@@ -69,6 +74,7 @@ function replaceProject(data) {
     const modifiedProject = getProject(data.id);
     modifiedProject.name = data.name;
     modifiedProject.description = data.description;
+    modifiedProject.dueDate = data.dueDate;
     storeData();
     return modifiedProject;
 }

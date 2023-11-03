@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, differenceInCalendarDays, formatDistanceToNowStrict } from 'date-fns';
 
 export default class Task {
 
@@ -29,12 +29,45 @@ export default class Task {
         this.dueDate = date;
     }
 
-    getDateString() {
+    getDateStringForPicker() {
         if (!this.dueDate) {
             return undefined;
         }
         return format(this.dueDate, 'yyyy-MM-dd');
     }
+
+    getDateStringToDisplay() {
+        if (!this.dueDate) {
+            return undefined;
+        }
+        const today = new Date();
+        const difference = differenceInCalendarDays(this.dueDate, today);
+        if (difference === 0) {
+            return 'today';
+        } 
+        if (difference < 0) {
+            return formatDistanceToNowStrict(this.dueDate, {unit: 'day', addSuffix: true});
+        } 
+        if (difference > 6) {
+            return format(this.dueDate, 'MMM dd');
+        }
+        return formatDistanceToNowStrict(this.dueDate, {unit: 'day', roundingMethod: 'ceil'});
+    }
+
+    getStatusFlag() {
+        if (!this.dueDate) {
+            return '';
+        }
+        const today = new Date();
+        const difference = differenceInCalendarDays(this.dueDate, today);
+        if (difference === 0) {
+            return 'due-today';
+        } 
+        if (difference < 0) {
+            return 'overdue';
+        } 
+    }
+
 
     // setId(id) {
     //     this.id = id;

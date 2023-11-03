@@ -1,10 +1,13 @@
+import { format, differenceInCalendarDays, formatDistanceToNowStrict } from 'date-fns';
+
 export default class Project {
     
     static lastId = 0;
 
-    constructor(name, description, id = Project.lastId++, progress = 0, tasks = []) {
+    constructor(name, description, dueDate, id = Project.lastId++, progress = 0, tasks = []) {
         this.name = name;
         this.description = description;
+        this.dueDate = dueDate;
         this.id = id;
         this.progress = progress;
         this.tasks = tasks;
@@ -41,5 +44,33 @@ export default class Project {
 
     getDescription() {
         return this.description;
+    }
+
+    getDateStringForPicker() {
+        if (!this.dueDate) {
+            return undefined;
+        }
+        return format(this.dueDate, 'yyyy-MM-dd');
+    }
+
+    getDateStringToDisplay() {
+        if (!this.dueDate) {
+            return undefined;
+        }
+        return format(this.dueDate, 'MMM dd');
+    }
+
+    getStatusFlag() {
+        if (!this.dueDate) {
+            return '';
+        }
+        const today = new Date();
+        const difference = differenceInCalendarDays(this.dueDate, today);
+        if (difference === 0) {
+            return 'due-today';
+        } 
+        if (difference < 0) {
+            return 'overdue';
+        } 
     }
 }
