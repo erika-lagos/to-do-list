@@ -171,8 +171,12 @@ function replaceProject(project) {
     homeContainer.replaceChild(newNode, oldNode);
 }
 
-function renderAllTasks(tasks) {
+function renderTaskList(tasks, title) {
     clear();
+    const titleNode = document.createElement('div');
+    titleNode.className = 'section-header';
+    titleNode.textContent = title;
+    homeContainer.append(titleNode);
     renderTasks(tasks);   
 }
 
@@ -196,7 +200,7 @@ export {
     render,
     clear,
     renderProject,
-    renderAllTasks, 
+    renderTaskList, 
     addTask,
     removeTask,
     replaceTask,

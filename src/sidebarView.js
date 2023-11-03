@@ -1,4 +1,6 @@
 import AllTasks from './assets/images/all-tasks.svg';
+import Star from './assets/images/star.svg';
+import Calendar from './assets/images/calendar.svg';
 import NewWorkspace from './assets/images/new-workspace.svg';
 import NewProject from './assets/images/new-project.svg';
 import ProjectIcon from './assets/images/project-icon.svg';
@@ -7,6 +9,8 @@ import * as pubSub from './pubSub.js';
 const sidebarContainer = document.querySelector('.sidebar');
 let projectsContainer;
 const defaultButtons = [
+    createButton('Today', Star, true, 'Today Tasks'),
+    createButton('Upcoming', Calendar, true, 'Upcoming'),
     createButton('All Tasks', AllTasks, true, 'All Tasks')
 ];
 const footerButtons = [

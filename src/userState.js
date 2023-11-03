@@ -1,3 +1,4 @@
+import { compareAsc, differenceInCalendarDays } from 'date-fns';
 import Task from './task';
 import Project from './project';
 
@@ -94,7 +95,27 @@ function getAllTasks() {
     projects.forEach(project => {
         tasks.push(...project.getTasks());
     });
+    tasks.sort((a, b) => {
+        if (!a.dueDate && !b.dueDate) {
+            return 0;
+        }
+        if (!a.dueDate) {
+            return 1;
+        }
+        if (!b.dueDate) {
+            return -1;
+        }
+        return compareAsc(a.dueDate, b.dueDate);
+    });
     return tasks;
+}
+
+function getUpcomingTasks(days) {
+    const tasks = getAllTasks();
+    const today = new Date();
+    return tasks.filter(task =>
+        task.dueDate && differenceInCalendarDays(task.dueDate, today) < days
+    );
 }
 
 function getTask(id) {
@@ -143,6 +164,7 @@ export {
     addProject,
     removeProject,
     getAllTasks,
+    getUpcomingTasks,
     addTask,
     removeTask,
     replaceTask

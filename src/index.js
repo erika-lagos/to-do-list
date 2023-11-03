@@ -12,7 +12,19 @@ const taskView = new EditView('Delete Task', 'Save Task', 'Name your task', 'Des
 
 function showAllTasks() {
     const allTasks = userState.getAllTasks();
-    homeView.renderAllTasks(allTasks);
+    homeView.renderTaskList(allTasks, 'All Tasks');
+    userState.setActiveProject(undefined);
+}
+
+function showTodayTasks() {
+    const tasks = userState.getUpcomingTasks(1);
+    homeView.renderTaskList(tasks, 'Tasks for today');
+    userState.setActiveProject(undefined);
+}
+
+function showUpcomingTasks() {
+    const tasks = userState.getUpcomingTasks(7);
+    homeView.renderTaskList(tasks, 'Tasks for the next week');
     userState.setActiveProject(undefined);
 }
 
@@ -90,7 +102,8 @@ function addEventListeners() {
     pubSub.subscribe('Edit Project', editProject);
     pubSub.subscribe('Delete Project', deleteProject);
     pubSub.subscribe('All Tasks', showAllTasks);
-
+    pubSub.subscribe('Today Tasks', showTodayTasks);
+    pubSub.subscribe('Upcoming', showUpcomingTasks);
 }
 
 function loadContent() {
