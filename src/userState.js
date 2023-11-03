@@ -30,15 +30,15 @@ function storeData() {
 
 function parseProject(projectString) {
     const project = new Project(projectString.name, projectString.description, projectString.id, projectString.progress);
-    projectString.tasks?.forEach(task => {
-        project.addTask(new Task(task.name, task.description, task.id, task.isComplete));
+    projectString.tasks?.forEach(taskString => {
+        project.addTask(new Task(taskString.name, taskString.description, taskString.projectId, taskString.id, taskString.isComplete));
     });
     projects.push(project);
 }
 
 function parseTasks(tasks) {
-    tasks?.forEach(task => {
-        unassignedTasks.push(new Task(task.name, task.description, task.id, task.isComplete));
+    tasks?.forEach(taskString => {
+        unassignedTasks.push(new Task(taskString.name, taskString.description, taskString.projectId, taskString.id, taskString.isComplete));
     });
 }
 
@@ -77,13 +77,22 @@ function removeProject(id) {
 }
 
 function getAllTasks() {
-    //TO-DO
-    console.log('Pendong functionality to see all tasks');
-    // return tasks;
+    const tasks = [];
+    tasks.push(...unassignedTasks);
+    projects.forEach(project => {
+        tasks.push(...project.getTasks());
+    });
+    return tasks;
+}
+
+function getTask(id) {
+    const allTasks = getAllTasks();
+    return allTasks.find(task => task.id === id);
 }
 
 function addTask(newTask) {
     if (activeProject) {
+        newTask.setProjectId(activeProject.id);
         activeProject.addTask(newTask);
     } else {
         unassignedTasks.push(newTask);
@@ -92,8 +101,15 @@ function addTask(newTask) {
 }
 
 function removeTask(id) {
-    if (activeProject) {
-        activeProject.removeTask(id);
+    //TO-DO : if I did it from all tasks, check for its projectId
+    // find the task based on its id
+    // get the project id
+    // if the project exists, delet the task from the project
+    // if the project doesnt exist, delete the task from unassigned
+    const task = getTask(id);
+    if (task.projectId) {
+        const project = getProject(task.projectId);
+        project.removeTask(id);
     } else {
         const taskIndex = unassignedTasks.findIndex(task => task.id === id);
         unassignedTasks.splice(taskIndex,1);
@@ -102,13 +118,12 @@ function removeTask(id) {
 }
 
 function replaceTask(taskData) {
-    const modifiedTask = activeProject ? 
-        activeProject.getTask(taskData.id) : 
-        unassignedTasks.find(task => task.id === taskData.id);
-    modifiedTask.name = taskData.name;
-    modifiedTask.description = taskData.description;
+    //TO-DO : if I did it from all tasks, check for its projectId
+    const task = getTask(taskData.id);
+    task.name = taskData.name;
+    task.description = taskData.description;
     storeData();
-    return modifiedTask;
+    return task;
 }
 
 loadStorage();

@@ -10,6 +10,12 @@ import './style.css';
 const projectView = new EditView('Delete Project', 'Save Project', 'Name your project', 'Describe your project');
 const taskView = new EditView('Delete Task', 'Save Task', 'Name your task', 'Describe your task');
 
+function showAllTasks() {
+    const allTasks = userState.getAllTasks();
+    homeView.renderAllTasks(allTasks);
+    userState.setActiveProject(undefined);
+}
+
 function createProject() {
     projectView.show();
 }
@@ -83,6 +89,7 @@ function addEventListeners() {
     pubSub.subscribe('Save Project', saveProject);
     pubSub.subscribe('Edit Project', editProject);
     pubSub.subscribe('Delete Project', deleteProject);
+    pubSub.subscribe('All Tasks', showAllTasks);
 
 }
 

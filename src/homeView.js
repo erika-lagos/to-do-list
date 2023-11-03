@@ -146,6 +146,7 @@ function replaceProject(project) {
 }
 
 function renderAllTasks(tasks) {
+    clear();
     renderTasks(tasks);   
 }
 
