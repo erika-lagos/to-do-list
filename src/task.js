@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export default class Task {
 
     static lastId = 0;
@@ -25,6 +27,13 @@ export default class Task {
     setDueDate(date) {
         //TO-DO: validate the input
         this.dueDate = date;
+    }
+
+    getDateString() {
+        if (!this.dueDate) {
+            return undefined;
+        }
+        return format(this.dueDate, 'yyyy-MM-dd');
     }
 
     // setId(id) {

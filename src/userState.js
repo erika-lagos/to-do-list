@@ -19,8 +19,8 @@ let activeProject;
 
 function loadStorage() {
     const storedProjects = JSON.parse(localStorage.getItem('projects'));
-    storedProjects?.forEach(parseProject);
-    parseTasks(JSON.parse(localStorage.getItem('tasks')));
+    storedProjects?.forEach(project => projects.push(parseProject(project)));
+    unassignedTasks.push(...parseTasks(JSON.parse(localStorage.getItem('tasks'))));
 }
 
 function storeData() {
@@ -30,18 +30,22 @@ function storeData() {
 
 function parseProject(projectString) {
     const project = new Project(projectString.name, projectString.description, projectString.id, projectString.progress);
-    projectString.tasks?.forEach(taskStr => {
-        project.addTask(new Task(
-            taskStr.name, taskStr.description, taskStr.dueDate, taskStr.projectId, taskStr.id, taskStr.isComplete));
-    });
-    projects.push(project);
+    project.addTasks(parseTasks(projectString.tasks));
+    return project;
 }
 
-function parseTasks(tasks) {
-    tasks?.forEach(taskStr => {
-        unassignedTasks.push(new Task(
-            taskStr.name, taskStr.description, taskStr.dueDate, taskStr.projectId, taskStr.id, taskStr.isComplete));
+function parseTasks(taskStrings) {
+    const tasks = [];
+    taskStrings?.forEach(taskStr => {
+        tasks.push(new Task(
+            taskStr.name, 
+            taskStr.description, 
+            taskStr.dueDate ? new Date(taskStr.dueDate) : undefined, 
+            taskStr.projectId, 
+            taskStr.id, 
+            taskStr.isComplete));
     });
+    return tasks;
 }
 
 function addProject(project) {

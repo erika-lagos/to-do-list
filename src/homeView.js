@@ -4,6 +4,7 @@ import Edit from './assets/images/edit.svg';
 import Delete from './assets/images/delete.svg';
 import ProjectIcon from './assets/images/project-icon.svg';
 import * as pubSub from './pubSub.js';
+import { differenceInCalendarDays, formatDistanceToNowStrict } from 'date-fns';
 
 class footerButton {
     constructor(name, icon) {
@@ -70,6 +71,11 @@ function createTaskNode(task) {
     });
     taskNode.append(check);
     
+    if (task.dueDate) {
+        const dateLabel = createDateLabel(task.dueDate);
+        taskNode.append(dateLabel);
+    }
+    
     const label = document.createElement('label');
     label.className = 'task-name';
     label.setAttribute('for', task.id);
@@ -84,6 +90,24 @@ function createTaskNode(task) {
     taskNode.append(taskButtons);
     
     return taskNode;
+}
+
+function createDateLabel(dueDate) {
+    const dateLabel = document.createElement('label');
+    dateLabel.className = 'date-label';
+    
+    const today = new Date();
+    const difference = differenceInCalendarDays(dueDate, today);
+    if (difference === 0) {
+        dateLabel.classList.add('due-today');
+        dateLabel.textContent = 'today';
+    } else if (difference < 0) {
+        dateLabel.classList.add('overdue');
+        dateLabel.textContent = formatDistanceToNowStrict(dueDate, {unit: 'day', addSuffix: true});
+    } else {
+        dateLabel.textContent = formatDistanceToNowStrict(dueDate, {unit: 'day', roundingMethod: 'ceil'});
+    }
+    return dateLabel;
 }
 
 function renderTasks(tasks) {

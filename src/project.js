@@ -22,6 +22,10 @@ export default class Project {
         // this.calculateProgress();
     }
 
+    addTasks(tasks) {
+        this.tasks.push(...tasks);
+    }
+
     removeTask(id) {
         const taskIndex = this.tasks.findIndex(task => task.id === id);
         this.tasks.splice(taskIndex,1);

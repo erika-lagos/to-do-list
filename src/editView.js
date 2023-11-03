@@ -91,7 +91,7 @@ export default class EditView {
     save() {
         const name = this.nameInput.value;
         const description = this.descInput.value;
-        const dueDate = this.dateInput.value;
+        const dueDate = this.dateInput.value !== '' ? new Date(`${this.dateInput.value}T00:00`) : undefined;
         pubSub.publish(this.saveAction, {name, description, dueDate, id: this.activeId});
         this.close();
     }
@@ -119,7 +119,7 @@ export default class EditView {
         if (userObject !== undefined) {
             this.nameInput.value = userObject.name ? userObject.name : '';
             this.descInput.value = userObject.description ? userObject.description : '';
-            this.dateInput.value = userObject.dueDate ? userObject.dueDate : '';
+            this.dateInput.value = userObject.getDateString();
             this.activeId = userObject.id;
         } 
         this.dialog.show();
