@@ -30,15 +30,17 @@ function storeData() {
 
 function parseProject(projectString) {
     const project = new Project(projectString.name, projectString.description, projectString.id, projectString.progress);
-    projectString.tasks?.forEach(taskString => {
-        project.addTask(new Task(taskString.name, taskString.description, taskString.projectId, taskString.id, taskString.isComplete));
+    projectString.tasks?.forEach(taskStr => {
+        project.addTask(new Task(
+            taskStr.name, taskStr.description, taskStr.dueDate, taskStr.projectId, taskStr.id, taskStr.isComplete));
     });
     projects.push(project);
 }
 
 function parseTasks(tasks) {
-    tasks?.forEach(taskString => {
-        unassignedTasks.push(new Task(taskString.name, taskString.description, taskString.projectId, taskString.id, taskString.isComplete));
+    tasks?.forEach(taskStr => {
+        unassignedTasks.push(new Task(
+            taskStr.name, taskStr.description, taskStr.dueDate, taskStr.projectId, taskStr.id, taskStr.isComplete));
     });
 }
 
@@ -101,11 +103,6 @@ function addTask(newTask) {
 }
 
 function removeTask(id) {
-    //TO-DO : if I did it from all tasks, check for its projectId
-    // find the task based on its id
-    // get the project id
-    // if the project exists, delet the task from the project
-    // if the project doesnt exist, delete the task from unassigned
     const task = getTask(id);
     if (task.projectId) {
         const project = getProject(task.projectId);
@@ -118,10 +115,10 @@ function removeTask(id) {
 }
 
 function replaceTask(taskData) {
-    //TO-DO : if I did it from all tasks, check for its projectId
     const task = getTask(taskData.id);
     task.name = taskData.name;
     task.description = taskData.description;
+    task.dueDate = taskData.dueDate;
     storeData();
     return task;
 }

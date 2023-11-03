@@ -15,6 +15,7 @@ export default class EditView {
         this.mainContainer = document.querySelector('.main');
         this.nameInput = this.createNameInput();
         this.descInput = this.createDescInput(); 
+        this.dateInput = this.createDateInput();
         this.dialog = this.generateDialog();
     }
 
@@ -63,6 +64,21 @@ export default class EditView {
         return descInput;
     }
 
+    createDateInput() {
+        const dueDateNode = document.createElement('input');
+        dueDateNode.type = 'date';
+        dueDateNode.id = 'due-date-input';
+        dueDateNode.name = 'due-date';
+        return dueDateNode;
+    }
+
+    createObjectTitle() {
+        const titleNode = document.createElement('div');
+        titleNode.className = 'dialog-object-title';
+        titleNode.append(this.nameInput, this.dateInput);
+        return titleNode;
+    }
+
     createFooter() {
         const footer = document.createElement('div');
         footer.className = 'dialog-footer';
@@ -75,31 +91,35 @@ export default class EditView {
     save() {
         const name = this.nameInput.value;
         const description = this.descInput.value;
-        pubSub.publish(this.saveAction, {name, description, id: this.activeId});
+        const dueDate = this.dateInput.value;
+        pubSub.publish(this.saveAction, {name, description, dueDate, id: this.activeId});
         this.close();
-    }
-
-    generateDialog() {
-        const dialog = document.createElement('dialog');
-        dialog.className = 'task-view';
-        dialog.append(this.createHeader());
-        dialog.append(this.nameInput, this.descInput);
-        dialog.append(this.createFooter())
-        this.mainContainer.append(dialog);
-        return dialog;
     }
 
     close() {
         this.nameInput.value = '';
         this.descInput.value = '';
+        this.dateInput.value = '';
         this.activeId = undefined;
         this.dialog.close();
+    }
+
+    generateDialog() {
+        const dialog = document.createElement('dialog');
+        dialog.className = 'edit-view';
+        dialog.append(this.createHeader());
+        dialog.append(this.createObjectTitle());
+        dialog.append(this.descInput);
+        dialog.append(this.createFooter())
+        this.mainContainer.append(dialog);
+        return dialog;
     }
 
     show(userObject) {
         if (userObject !== undefined) {
             this.nameInput.value = userObject.name ? userObject.name : '';
             this.descInput.value = userObject.description ? userObject.description : '';
+            this.dateInput.value = userObject.dueDate ? userObject.dueDate : '';
             this.activeId = userObject.id;
         } 
         this.dialog.show();

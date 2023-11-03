@@ -2,9 +2,10 @@ export default class Task {
 
     static lastId = 0;
 
-    constructor(name, description, projectId, id = Task.lastId++, isComplete = false) {
+    constructor(name, description, dueDate, projectId, id = Task.lastId++, isComplete = false) {
         this.name = name;
         this.description = description;
+        this.dueDate = dueDate;
         this.projectId = projectId;
         this.id = id;
         this.isComplete = isComplete;
@@ -19,6 +20,11 @@ export default class Task {
 
     setProjectId(id) {
         this.projectId = id;
+    }
+
+    setDueDate(date) {
+        //TO-DO: validate the input
+        this.dueDate = date;
     }
 
     // setId(id) {

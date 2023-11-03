@@ -52,7 +52,7 @@ function saveTask(data) {
         const modifiedTask = userState.replaceTask(data);
         homeView.replaceTask(modifiedTask);
     } else {
-        const task = new Task(data.name, data.description);
+        const task = new Task(data.name, data.description, data.dueDate);
         userState.addTask(task);
         homeView.addTask(task);
     }
