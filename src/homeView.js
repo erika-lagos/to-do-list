@@ -30,7 +30,6 @@ class footerButton {
 
 const mainContainer = document.querySelector('.main');
 const homeContainer = createHomeContainer();
-
 const footerButtons = [
     new footerButton('New Task', NewTask),
     new footerButton('New Header', NewHeader)
@@ -74,7 +73,7 @@ function createTaskNode(task) {
     const editButton = createButton(Edit, 'Edit Task', task);
     const delButton = createButton(Delete, 'Delete Task', task.id);
     const taskButtons = document.createElement('div');
-    taskButtons.className = 'task-buttons';
+    taskButtons.className = 'inline-buttons';
     taskButtons.append(editButton, delButton);
     taskNode.append(taskButtons);
     
@@ -102,17 +101,27 @@ function renderFooter(items) {
     mainContainer.appendChild(itemsContainer);
 }
 
-function renderProjectDetails(project) {
+function createProjectNode(project) {
     const nameNode = document.createElement('div');
-    nameNode.className = 'project-name';
+    nameNode.className = 'project-header';
     nameNode.textContent = project.name;
+    
+    const editButton = createButton(Edit, 'Edit Project', project);
+    const delButton = createButton(Delete, 'Delete Project', project.id);
+    const projectButtons = document.createElement('div');
+    projectButtons.className = 'inline-buttons';
+    projectButtons.append(editButton, delButton);
+    nameNode.append(projectButtons);
+    
     const descNode = document.createElement('div');
     descNode.className = 'project-description';
     descNode.textContent = project.description;
+
     const projectNode = document.createElement('div');
     projectNode.className = 'project';
     projectNode.append(nameNode, descNode);
-    homeContainer.append(projectNode);
+    
+    return projectNode;
 }
 
 function render() {
@@ -120,12 +129,21 @@ function render() {
     renderFooter(footerButtons);
 }
 
-function renderProject(project) {
+function clear() {
     homeContainer.innerHTML = '';
-    renderProjectDetails(project);
+}
+
+function renderProject(project) {
+    clear();
+    homeContainer.append(createProjectNode(project));
     renderTasks(project.getTasks());
 }
 
+function replaceProject(project) {
+    const oldNode = document.querySelector('.project');
+    const newNode = createProjectNode(project);
+    homeContainer.replaceChild(newNode, oldNode);
+}
 
 function renderAllTasks(tasks) {
     renderTasks(tasks);   
@@ -149,8 +167,11 @@ function replaceTask(task) {
 
 export { 
     render,
+    clear,
     renderProject,
     renderAllTasks, 
     addTask,
     removeTask,
-    replaceTask };
+    replaceTask,
+    replaceProject 
+};

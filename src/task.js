@@ -7,7 +7,7 @@ export default class Task {
         this.description = description;
         this.id = id;
         this.isComplete = isComplete;
-        if (this.id > Task.lastId + 1) {
+        if (this.id >= Task.lastId) {
             Task.lastId = this.id + 1;
         }
     }

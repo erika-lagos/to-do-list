@@ -98,8 +98,8 @@ export default class EditView {
 
     show(userObject) {
         if (userObject !== undefined) {
-            this.nameInput.value = userObject.name;
-            this.descInput.value = userObject.description;
+            this.nameInput.value = userObject.name ? userObject.name : '';
+            this.descInput.value = userObject.description ? userObject.description : '';
             this.activeId = userObject.id;
         } 
         this.dialog.show();

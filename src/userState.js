@@ -67,6 +67,15 @@ function replaceProject(data) {
     return modifiedProject;
 }
 
+function removeProject(id) {
+    const projectIndex = projects.findIndex(project => project.id === id);
+    projects.splice(projectIndex,1);
+    if (activeProject.id === id) {
+        activeProject = undefined;
+    }
+    storeData();
+}
+
 function getAllTasks() {
     //TO-DO
     console.log('Pendong functionality to see all tasks');
@@ -83,18 +92,23 @@ function addTask(newTask) {
 }
 
 function removeTask(id) {
-    //TO-DO
-    // const taskIndex = tasks.findIndex(task => task.id === id);
-    // tasks.splice(taskIndex,1);
-    // storeTasks();
+    if (activeProject) {
+        activeProject.removeTask(id);
+    } else {
+        const taskIndex = unassignedTasks.findIndex(task => task.id === id);
+        unassignedTasks.splice(taskIndex,1);
+    }
+    storeData();
 }
 
 function replaceTask(taskData) {
-    // const oldTask = tasks.find(task => task.id === taskData.id);
-    // oldTask.name = taskData.name;
-    // oldTask.description = taskData.description;
-    // storeTasks();
-    // return oldTask;
+    const modifiedTask = activeProject ? 
+        activeProject.getTask(taskData.id) : 
+        unassignedTasks.find(task => task.id === taskData.id);
+    modifiedTask.name = taskData.name;
+    modifiedTask.description = taskData.description;
+    storeData();
+    return modifiedTask;
 }
 
 loadStorage();
@@ -105,6 +119,7 @@ export {
     getProject,
     replaceProject,
     addProject,
+    removeProject,
     getAllTasks,
     addTask,
     removeTask,

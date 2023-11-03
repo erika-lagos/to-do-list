@@ -13,13 +13,22 @@ export default class Project {
         }
     }
 
+    getTasks() {
+        return this.tasks;
+    }
+
     addTask(task) {
         this.tasks.push(task);
         // this.calculateProgress();
     }
 
-    getTasks() {
-        return this.tasks;
+    removeTask(id) {
+        const taskIndex = this.tasks.findIndex(task => task.id === id);
+        this.tasks.splice(taskIndex,1);
+    }
+
+    getTask(id) {
+        return this.tasks.find(task => task.id === id);
     }
 
     getName() {

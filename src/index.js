@@ -18,11 +18,23 @@ function saveProject(data) {
     if (data.id !== undefined && data.id !== null) {  
         const modifiedProject = userState.replaceProject(data);
         sidebarView.replaceProject(modifiedProject);
+        homeView.replaceProject(modifiedProject);
     } else {
         const project = new Project(data.name, data.description);
         userState.addProject(project);
         sidebarView.addProject(project);
     }
+}
+
+function deleteProject(projectId) {
+    console.log('delete project is called');
+    userState.removeProject(projectId);
+    sidebarView.removeProject(projectId);
+    homeView.clear();
+}
+
+function editProject(project) {
+    projectView.show(project);
 }
 
 function createTask() {
@@ -68,7 +80,10 @@ function addEventListeners() {
     pubSub.subscribe('Edit Task', editTask);
     pubSub.subscribe('Show Project', showProject);
     pubSub.subscribe('New Project', createProject);
-    pubSub.subscribe('Save Project', saveProject)
+    pubSub.subscribe('Save Project', saveProject);
+    pubSub.subscribe('Edit Project', editProject);
+    pubSub.subscribe('Delete Project', deleteProject);
+
 }
 
 function loadContent() {

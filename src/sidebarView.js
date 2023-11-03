@@ -58,8 +58,13 @@ function addProject(project) {
 
 function replaceProject(project) {
     const oldProjectNode = document.querySelector(`[id=project-${project.id}]`);
-    const [ newProjectNode ] = createUserButtons(...project);
+    const [ newProjectNode ] = createUserButtons([ project ]);
     oldProjectNode.parentNode.replaceChild(newProjectNode, oldProjectNode);
+}
+
+function removeProject(projectId) {
+    const projectNode = document.querySelector(`[id=project-${projectId}]`);
+    projectNode.parentNode.removeChild(projectNode);
 }
 
 function render(userItems) {
@@ -72,5 +77,6 @@ function render(userItems) {
 export  { 
     render, 
     addProject,
-    replaceProject 
+    replaceProject,
+    removeProject 
 };
