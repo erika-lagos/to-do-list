@@ -47,6 +47,7 @@ function parseTasks(taskStrings) {
             taskStr.name, 
             taskStr.description, 
             taskStr.dueDate ? new Date(taskStr.dueDate) : undefined, 
+            taskStr.highPriority,
             taskStr.projectId, 
             taskStr.id, 
             taskStr.isComplete));
@@ -150,6 +151,7 @@ function replaceTask(taskData) {
     task.name = taskData.name;
     task.description = taskData.description;
     task.dueDate = taskData.dueDate;
+    task.highPriority = taskData.highPriority;
     storeData();
     return task;
 }

@@ -3,8 +3,8 @@ import NewTask from './assets/images/new-task.svg';
 import Edit from './assets/images/edit.svg';
 import Delete from './assets/images/delete.svg';
 import ProjectIcon from './assets/images/project-icon.svg';
+import PriorityFlag from './assets/images/priority-flag.svg';
 import * as pubSub from './pubSub.js';
-import { differenceInCalendarDays, formatDistanceToNowStrict } from 'date-fns';
 
 class footerButton {
     constructor(name, icon) {
@@ -81,6 +81,18 @@ function createTaskNode(task) {
     label.setAttribute('for', task.id);
     label.textContent = task.name;
     taskNode.append(label);
+
+    if (task.highPriority) {
+        const priorityMarker = document.createElement('div');
+        priorityMarker.classList.add('high-priority', 'high-priority-small');
+        const img = new Image();
+        img.src = PriorityFlag;
+        img.alt = 'Priority flag';
+        img.className = 'tiny-icon';
+        priorityMarker.append(img, 'High Priority');
+        // priorityMarker.textContent = 'High Priority';
+        taskNode.append(priorityMarker);
+    }
     
     const editButton = createButton(Edit, 'Edit Task', task);
     const delButton = createButton(Delete, 'Delete Task', task.id);

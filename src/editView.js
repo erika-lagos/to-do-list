@@ -6,7 +6,7 @@ import * as pubSub from './pubSub.js';
 export default class EditView {
     
     activeId;
-    
+
     constructor(deleteAction, saveAction, placeholderName, placeholderDesc) {
         this.deleteAction = deleteAction;
         this.saveAction = saveAction;

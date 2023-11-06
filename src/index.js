@@ -1,6 +1,7 @@
 import Task from './task';
 import Project from './project';
 import EditView from './editView';
+import TaskView from './taskView';
 import * as userState from './userState';
 import * as pubSub from './pubSub';
 import * as sidebarView from './sidebarView';
@@ -8,7 +9,7 @@ import * as homeView from './homeView';
 import './style.css';
 
 const projectView = new EditView('Delete Project', 'Save Project', 'Name your project', 'Describe your project');
-const taskView = new EditView('Delete Task', 'Save Task', 'Name your task', 'Describe your task');
+const taskView = new TaskView('Delete Task', 'Save Task', 'Name your task', 'Describe your task');
 
 function showAllTasks() {
     const allTasks = userState.getAllTasks();
@@ -64,7 +65,7 @@ function saveTask(data) {
         const modifiedTask = userState.replaceTask(data);
         homeView.replaceTask(modifiedTask);
     } else {
-        const task = new Task(data.name, data.description, data.dueDate);
+        const task = new Task(data.name, data.description, data.dueDate, data.highPriority);
         userState.addTask(task);
         homeView.addTask(task);
     }

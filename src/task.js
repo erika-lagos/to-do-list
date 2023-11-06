@@ -4,10 +4,11 @@ export default class Task {
 
     static lastId = 0;
 
-    constructor(name, description, dueDate, projectId, id = Task.lastId++, isComplete = false) {
+    constructor(name, description, dueDate, highPriority = false, projectId, id = Task.lastId++, isComplete = false) {
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
+        this.highPriority = highPriority;
         this.projectId = projectId;
         this.id = id;
         this.isComplete = isComplete;

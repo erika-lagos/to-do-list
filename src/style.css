@@ -14,8 +14,16 @@ button {
     font-size: 12pt;
 }
 
+.tiny-icon {
+    height: 12px;
+}
+
 .small-icon {
     height: 20px;
+}
+
+.icon {
+    margin-right: 2px;
 }
 
 .sidebar, 
@@ -36,7 +44,13 @@ button {
 
 .sidebar-items, 
 .home-view {
-    padding: 30px 30px 30px 60px;
+    padding: 50px 30px 30px 60px;
+}
+
+.sidebar-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .sidebar-item, 
@@ -44,14 +58,10 @@ button {
     text-align: left;
     font-size: 11pt;
     display:flex;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
     padding: 5px 0;
     height: 20px;
-}
-
-.sidebar-item {
-    margin-top: 15px;
 }
 
 .project-header,
@@ -123,7 +133,27 @@ button {
     text-decoration: line-through;
 }
 
+.high-priority {
+    color: #b91c1c;
+}
 
+.low-priority {
+    color: #6b6b6b;
+}
+
+.high-priority,
+.low-priority {
+    font-size: 9pt;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: auto;
+}
+
+.high-priority-small {
+    font-size: 8pt;
+    margin-left: 20px;
+}
 
 .sidebar-footer,
 .home-footer {
