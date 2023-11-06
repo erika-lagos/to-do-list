@@ -19,7 +19,7 @@ class footerButton {
         img.className = 'icon';
         const button = document.createElement('button');
         button.className = 'sidebar-item';
-        button.appendChild(img);
+        button.append(img, this.name);
         button.addEventListener('click', this.handleClick.bind(this));
         return button;
     }
@@ -32,8 +32,8 @@ class footerButton {
 const mainContainer = document.querySelector('.main');
 const homeContainer = createHomeContainer();
 const footerButtons = [
-    new footerButton('New Task', NewTask),
-    new footerButton('New Header', NewHeader)
+    new footerButton('New Task', NewTask)
+    // new footerButton('New Header', NewHeader)
 ];
 
 function createHomeContainer() {
@@ -65,10 +65,10 @@ function createTaskNode(task) {
     check.id = task.id;
     check.checked = task.isComplete;
     check.addEventListener('change', evt => {
-        //This is dirty here :(
         task.isComplete = check.checked;
         pubSub.publish('Save Task', task);
     });
+    
     taskNode.append(check);
     
     if (task.dueDate) {

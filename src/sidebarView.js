@@ -14,8 +14,8 @@ const defaultButtons = [
     createButton('All Tasks', AllTasks, true, 'All Tasks')
 ];
 const footerButtons = [
-    createButton('New Workspace', NewWorkspace, false, 'New Workspace'),
-    createButton('New Project', NewProject, false, 'New Project')
+    // createButton('New Workspace', NewWorkspace, false, 'New Workspace'),
+    createButton('New Project', NewProject, true, 'New Project')
 ];
 
 function createButton(name, icon, showName, action, actionData) {
