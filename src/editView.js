@@ -48,7 +48,7 @@ export default class EditView {
     createNameInput() {
         const nameInput = document.createElement('input');
         nameInput.type = 'text';
-        nameInput.id = 'task-name-input';
+        nameInput.className = 'name-input';
         nameInput.name = 'task-name';
         nameInput.placeholder = this.placeholderName;
         return nameInput;
@@ -57,7 +57,7 @@ export default class EditView {
     createDescInput() {
         const descInput = document.createElement('textarea');
         descInput.name = 'task-desc';
-        descInput.id = 'task-desc-input';
+        descInput.className = 'desc-input';
         descInput.cols = 50;
         descInput.rows = 4;
         descInput.placeholder = this.placeholderDesc;
@@ -67,7 +67,7 @@ export default class EditView {
     createDateInput() {
         const dueDateNode = document.createElement('input');
         dueDateNode.type = 'date';
-        dueDateNode.id = 'due-date-input';
+        dueDateNode.className = 'due-date-input';
         dueDateNode.name = 'due-date';
         return dueDateNode;
     }
